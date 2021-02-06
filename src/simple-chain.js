@@ -1,26 +1,67 @@
 const CustomError = require("../extensions/custom-error");
 
+
 const chainMaker = {
+  arr: [],
   getLength() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    return this.arr.length - 1
   },
   addLink(value) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    String(value) ? this.arr.push(`( ${String(value)} )`) : this.arr.push(`'(  )'`)
+    return this
   },
   removeLink(position) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if (!position || typeof position !== 'number' || position < 0 || position > this.getLength()) {
+      this.arr = []
+      throw new Error()
+    }
+
+    this.arr.splice(position - 1, 1)
+    return this
   },
   reverseChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    this.arr.reverse()
+    return this;
   },
   finishChain() {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    const result = this.arr.join('~~')
+    this.arr = []
+    return result
   }
 };
 
+// const chainMaker = {
+//   result: [],
+//   getLength() {
+//     return this.result.length
+//   },
+//   addLink(value) {
+//     value = String(value) ? `( ${String(value)} )` : '( )'
+//     this.result.push(value)
+//
+//     return this
+//   },
+//   removeLink(position) {
+//     if (!position || typeof position !== 'number' || position < 0 ) {
+//       this.result = []
+//       throw new Error()
+//     }
+//
+//     this.result.splice(position - 1, 1)
+//     return this
+//   },
+//   reverseChain() {
+//     this.result.reverse()
+//     return this
+//   },
+//   finishChain() {
+//     const finishResult = this.result.join('~~')
+//     this.result = []
+//
+//     return finishResult
+//   }
+// };
+
 module.exports = chainMaker;
+
+// console.log(chainMaker.addLink(0).addLink(NaN).addLink(123).reverseChain().addLink('tergrge').finishChain());
